@@ -14,7 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', 'ApiController@register');
-Route::post('/login', 'ApiController@login');
+Route::post('login', 'ApiController@login');
+Route::post('register', 'ApiController@register');
+Route::group([
+
+    'middleware' => 'jwt.verify',
+
+], function ($router) {
+
+    Route::post('logout', 'ApiController@logout');
+    Route::post('resend-otp', 'ApiController@resendOtp');
+    Route::post('forgot-password', 'ApiController@forgotPassword');
+    Route::post('verify-email', 'ApiController@verifyEmail');
+    Route::post('add-product', 'ApiController@forgotPassword');
+
+});
+
 
 

@@ -17,13 +17,17 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('owner_name');
             $table->string('shop_name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->nullable();
-            $table->string('mobile')->nullable();
-            $table->string('city')->nullable();
-            $table->string('address')->nullable();
-            $table->rememberToken();
+            $table->string('email');
+            $table->string('mobile_number');
+            $table->string('password');
+            $table->string('latitude');
+            $table->string('longitude');
+            $table->longText('address');
+            $table->tinyInteger('is_active')->default(0);
+            $table->integer('verify_code')->nullable();
+            $table->string('otp_expire')->nullable();
+            $table->tinyInteger('status')->default(0);
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

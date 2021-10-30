@@ -4,6 +4,7 @@ namespace App\Repository;
 
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserManagementRepository
@@ -20,28 +21,32 @@ class UserManagementRepository
         }else{
             $user = new User();
         }
-        if(isset($input['username'])) {
-            $user->username = $input['username'];
+        if(isset($input['owner_name'])) {
+            $user->owner_name = $input['owner_name'];
+        }
+        if(isset($input['shop_name'])) {
+            $user->shop_name = $input['shop_name'];
         }
         if(isset($input['email'])) {
-            $user->email = $input['email'];
+            $user->email = trim($input['email']);
         }
-        if(isset($input['phone'])) {
-            $user->phone = $input['phone'];
+        if(isset($input['mobile_number'])) {
+            $user->mobile_number = $input['mobile_number'];
         }
-        if(isset($input['points'])) {
-            $user->points = $input['points'];
+        if(isset($input['password'])) {
+            $user->password = Hash::make($input['password']);
         }
-        if(isset($input['profile_image'])) {
-            $user->profile_image = CommonHelper::uploadFile($input['profile_image'], 'uploads/user');
-        }else{
-            if(!isset($user->profile_image)){
-                $user->profile_image = 'images/default-profile-pic.jpeg';
-            }
+        if(isset($input['latitude'])) {
+            $user->latitude = $input['latitude'];
         }
-        $user->trial_date = date("Y-m-d H:i:s", strtotime("+14 day"));
+        if(isset($input['longitude'])) {
+            $user->longitude = $input['longitude'];
+        }
+        if(isset($input['address'])) {
+            $user->address = $input['address'];
+        }
 
         $user->save();
-        return true;
+        return $user;
     }
 }
